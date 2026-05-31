@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approval Prediction System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: none; border-radius: 12px; }
+        .btn-primary { background-color: #4f46e5; border: none; }
+        .btn-primary:hover { background-color: #4338ca; }
+        .alert-success { background-color: #d1e7dd; color: #0f5132; border-color: #badbcc; }
+        .alert-danger { background-color: #f8d7da; color: #842029; border-color: #f5c2c7; }
+    </style>
+</head>
+<body>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-5">
+                <h2 class="text-center mb-4 text-primary fw-bold">Loan Approval Prediction Panel</h2>
+                <hr>
+                
+                <form action="/predict" method="POST">
+                    <div class="row g-3">
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Number of Dependents</label>
+                            <input type="number" name="no_of_dependents" class="form-control" required min="0" value="0">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Education Status</label>
+                            <select name="education" class="form-select" required>
+                                <option value="1">Graduate</option>
+                                <option value="0">Not Graduate</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Self Employed?</label>
+                            <select name="self_employed" class="form-select" required>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Annual Income ($)</label>
+                            <input type="number" name="income_annum" class="form-control" required min="0" value="50000">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Loan Amount Requested ($)</label>
+                            <input type="number" name="loan_amount" class="form-control" required min="0" value="100000">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Loan Term (Months)</label>
+                            <input type="number" name="loan_term" class="form-control" required min="1" value="12">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">CIBIL / Credit Score</label>
+                            <input type="number" name="cibil_score" class="form-control" required min="300" max="900" value="700">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Residential Assets ($)</label>
+                            <input type="number" name="residential_assets_value" class="form-control" required min="0" value="10000">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Commercial Assets ($)</label>
+                            <input type="number" name="commercial_assets_value" class="form-control" required min="0" value="0">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Luxury Assets ($)</label>
+                            <input type="number" name="luxury_assets_value" class="form-control" required min="0" value="5000">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Bank Asset Value ($)</label>
+                            <input type="number" name="bank_asset_value" class="form-control" required min="0" value="2500">
+                        </div>
+                        
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 mt-4 py-2 fs-5 fw-bold">Analyze Loan Eligibility</button>
+                </form>
+
+                {% if prediction_text %}
+                    {% if "Approved" in prediction_text %}
+                        <div class="alert alert-success mt-4 text-center fw-bold fs-5" role="alert">
+                            {{ prediction_text }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-danger mt-4 text-center fw-bold fs-5" role="alert">
+                            {{ prediction_text }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
